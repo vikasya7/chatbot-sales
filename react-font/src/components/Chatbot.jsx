@@ -69,7 +69,7 @@ const Chatbot = () => {
 
     try {
       if (expectingOrderId) {
-        // ✅ Call /track-order
+        //  Call /track-order
         const res = await API.post('/track-order', { order_id: currentInput });
         const botMsg = {
           text: `✅ Order Status for ${currentInput}: ${res.data.status}`,
@@ -81,7 +81,7 @@ const Chatbot = () => {
         return;
       }
 
-      // ✅ Check if user is asking about tracking
+      //  Check if user is asking about tracking
       if (
         currentInput.toLowerCase().includes('track') &&
         currentInput.toLowerCase().includes('order')
@@ -96,7 +96,7 @@ const Chatbot = () => {
         return;
       }
 
-      // ✅ Else Normal chatbot product query
+      // Else Normal chatbot product query
       const res = await API.post('/chatbot-query', { query: currentInput });
 
       if (res.data.length === 0) {

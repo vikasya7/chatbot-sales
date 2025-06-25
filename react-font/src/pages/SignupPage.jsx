@@ -10,7 +10,7 @@ const SignupPage = () => {
 
     const handleSignup= async(e)=>{
         e.preventDefault();
-        console.log("Signup clicked ✅");
+        console.log("Signup clicked ");
 
         if(!username || !password || !confirm){
             return setError("All fields are required.")

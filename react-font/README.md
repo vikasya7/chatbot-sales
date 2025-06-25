@@ -8,7 +8,7 @@ It connects with the backend Flask API (hosted on Render) and allows users to **
 
 ##  Live Demo
 
-- **Frontend (Vercel Deploy)**: [https://chatbot-sales-4m8q.vercel.app/]
+- **Frontend (Vercel Deploy)**: [https://chatbot-sales-xl96.vercel.app/]
 - **Backend (Render API)**: [https://sales-chatbot-backend.onrender.com]
 
 ---

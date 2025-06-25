@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import API from '../services/api';  
+import API from '../services/api';
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("user"));
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setError("");
+    setError("");  // Clear previous error
 
     try {
       const res = await API.post("/login", {
@@ -18,17 +19,22 @@ const LoginPage = () => {
         password,
       });
 
-      console.log(res.data);
+      console.log(" Login Success:", res.data);
 
-      //  Save user to localStorage
+      //  Save user in localStorage
       localStorage.setItem("user", JSON.stringify({ username }));
-
-      //  Redirect
+      setIsLoggedIn(true); 
+      //  Redirect to Chat Page
       navigate("/chat");
+
     } catch (err) {
-      console.error("Login Error:", err);
-      const msg = err.response?.data?.error || "Login failed";
-      setError(msg);
+      console.error(" Login Error:", err);
+
+      if (err.response && err.response.status === 401) {
+        setError("Invalid username or password. Please try again.");
+      } else {
+        setError("Login failed. Please check your backend server or network.");
+      }
     }
   };
 
@@ -37,7 +43,7 @@ const LoginPage = () => {
       <form onSubmit={handleLogin} className="bg-white p-6 rounded shadow-md w-80">
         <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
 
-        {error && <p className="text-red-600 text-sm mb-2">{error}</p>}
+        {error && <p className="text-red-600 text-sm mb-3">{error}</p>}
 
         <input
           type="text"
@@ -66,7 +72,9 @@ const LoginPage = () => {
 
         <p className="mt-3 text-center text-sm">
           Don't have an account?{" "}
-          <Link to="/signup" className="text-blue-600 underline">Signup here</Link>
+          <Link to="/signup" className="text-blue-600 underline">
+            Signup here
+          </Link>
         </p>
       </form>
     </div>
@@ -74,4 +82,5 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
+
 
